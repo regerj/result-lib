@@ -3,6 +3,45 @@
 #include <stdexcept>
 #include <string>
 
+namespace ResultLib {
+
+class BaseResult {
+public:
+    static BaseResult Ok() {
+        BaseResult res;
+        res.m_type = OK;
+        return res;
+    }
+
+    static BaseResult Err() {
+        BaseResult res;
+        res.m_type = ERR;
+        return res;
+    }
+
+    inline bool is_ok() const {
+        return this->m_type == OK;
+    }
+
+    inline bool is_err() const {
+        return this->m_type == ERR;
+    }
+
+private:
+    BaseResult() = default;
+    
+    enum Type {
+        OK,
+        ERR
+    };
+
+    Type m_type;
+};
+
+class ResultCode {
+
+};
+
 // Forward declaration of the result class
 template <typename ErrorT, typename ResultT = void> class Result;
 
@@ -29,11 +68,15 @@ public:
         return res;
     }
 
-    bool is_ok() {
+    inline ErrorT get_status() const {
+        return this->m_error;
+    }
+
+    inline bool is_ok() const {
         return this->m_type == OK;
     }
 
-    bool is_err() {
+    inline bool is_err() const {
         return this->m_type == ERR;
     }
 
@@ -79,7 +122,7 @@ public:
         return res;
     }
 
-    ResultT unwrap() {
+    ResultT unwrap() const {
         if (m_type == OK) {
             return m_data;
         } else {
@@ -89,7 +132,7 @@ public:
         }
     }
 
-    ResultT except(std::string message) {
+    ResultT except(std::string &message) const {
         if (m_type == OK) {
             return m_data;
         } else {
@@ -97,11 +140,15 @@ public:
         }
     }
 
-    bool is_ok() {
+    inline ErrorT get_status() const {
+        return this->m_error;
+    }
+
+    inline bool is_ok() const {
         return this->m_type == OK;
     }
 
-    bool is_err() {
+    inline bool is_err() const {
         return this->m_type == ERR;
     }
 
@@ -117,3 +164,5 @@ private:
     ErrorT m_error;
     ResultT m_data;
 };
+
+} // namespace ResultLib

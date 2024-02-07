@@ -7,12 +7,12 @@ enum Status {
     SPECIFIC_FAIL = 2
 };
 
-using ShallowResult = Result<Status>;
+using ShallowResult = ResultLib::Result<Status>;
 template <typename ResultT>
-using DeepResult = Result<Status, ResultT>;
+using DeepResult = ResultLib::Result<Status, ResultT>;
 
 int main (int argc, char *argv[]) {
-    Result res = ShallowResult::Err();
+    auto res = ShallowResult::Err();
 
     if (res.is_ok()) {
         printf("It is ok!\n");
