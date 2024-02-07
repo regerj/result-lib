@@ -27,7 +27,7 @@ public:
         return this->m_type == ERR;
     }
 
-private:
+protected:
     BaseResult() = default;
     
     enum Type {
@@ -38,8 +38,36 @@ private:
     Type m_type;
 };
 
-class ResultCode {
+template <typename ErrorT> 
+class ResultCode : public BaseResult {
+public:
+    static ResultCode Ok() {
+        ResultCode res;
+        res.m_type = OK;
+        return res;
+    }
 
+    static ResultCode Err() {
+        ResultCode res;
+        res.m_type = ERR;
+        return res;
+    }
+
+    static ResultCode Err(ErrorT error) {
+        ResultCode res;
+        res.m_type = ERR;
+        res.m_error = error;
+        return res;
+    }
+
+    inline ErrorT get_status() const {
+        return this->m_error;
+    }
+
+protected:
+    ResultCode() = default;
+    
+    ErrorT m_error;
 };
 
 // Forward declaration of the result class

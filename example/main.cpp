@@ -1,11 +1,14 @@
 #include "../Result.h"
 #include <cstdio>
 
+// Some error code implemenation is recommended
 enum Status {
     SUCCESS = 0,
     GENERAL_FAIL = 1,
     SPECIFIC_FAIL = 2
 };
+
+ResultLib::ResultCode<Status> temp = ResultLib::ResultCode<Status>::Ok();
 
 using ShallowResult = ResultLib::Result<Status>;
 template <typename ResultT>
