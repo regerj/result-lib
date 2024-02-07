@@ -3,6 +3,8 @@
 #include <stdexcept>
 #include <string>
 
+namespace ResultLib {
+
 // Forward declaration of the result class
 template <typename ErrorT, typename ResultT = void> class Result;
 
@@ -117,3 +119,5 @@ private:
     ErrorT m_error;
     ResultT m_data;
 };
+
+} // namspace ResultLib
